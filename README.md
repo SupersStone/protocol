@@ -1,2 +1,1 @@
 # protocol
-open im protocol
