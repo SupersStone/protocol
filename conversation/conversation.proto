@@ -274,9 +274,9 @@ message GetOwnerConversationResp {
   repeated Conversation conversations = 2;
 }
 
-message GetConversationsNeedDestructMsgsReq {}
+message GetConversationsNeedClearMsgReq {}
 
-message GetConversationsNeedDestructMsgsResp {
+message GetConversationsNeedClearMsgResp {
   repeated Conversation conversations = 1;
 }
 
@@ -296,6 +296,13 @@ message GetPinnedConversationIDsResp {
   repeated string conversationIDs = 1;
 }
 
+message ClearUserConversationMsgReq {
+  int64 timestamp = 1;
+  int32 limit = 2;
+}
+message ClearUserConversationMsgResp {
+  int32 count = 1;
+}
 
 service conversation {
   rpc GetConversation(GetConversationReq) returns (GetConversationResp);
@@ -318,7 +325,8 @@ service conversation {
   rpc GetFullOwnerConversationIDs(GetFullOwnerConversationIDsReq) returns (GetFullOwnerConversationIDsResp);
   rpc GetIncrementalConversation(GetIncrementalConversationReq) returns (GetIncrementalConversationResp);
   rpc GetOwnerConversation(GetOwnerConversationReq) returns (GetOwnerConversationResp);
-  rpc GetConversationsNeedDestructMsgs(GetConversationsNeedDestructMsgsReq) returns (GetConversationsNeedDestructMsgsResp);
+  rpc GetConversationsNeedClearMsg(GetConversationsNeedClearMsgReq) returns (GetConversationsNeedClearMsgResp);
   rpc GetNotNotifyConversationIDs(GetNotNotifyConversationIDsReq) returns (GetNotNotifyConversationIDsResp);
   rpc GetPinnedConversationIDs(GetPinnedConversationIDsReq) returns (GetPinnedConversationIDsResp);
+  rpc ClearUserConversationMsg(ClearUserConversationMsgReq) returns (ClearUserConversationMsgResp);
 }

@@ -302,16 +302,19 @@ message GetServerTimeResp {
 }
 
 message ClearMsgReq {
-  int64 timestamp = 1;
+  repeated conversation.Conversation conversations = 1;
 }
 
 message ClearMsgResp {}
 
 message DestructMsgsReq {
-  repeated conversation.Conversation conversations = 1;
+  int64 timestamp = 1;
+  int32 limit = 2;
 }
 
-message DestructMsgsResp {}
+message DestructMsgsResp {
+  int32 count = 1;
+}
 
 message SetUserConversationsMinSeqReq {
   repeated string userIDs = 1;
@@ -329,6 +332,7 @@ message ConversationSeqs {
 message GetSeqMessageReq {
   string userID = 1;
   repeated ConversationSeqs conversations = 2;
+  sdkws.PullOrder order = 3;
 }
 
 message GetSeqMessageResp {
@@ -358,8 +362,7 @@ message AppendStreamMsgReq {
   bool end = 4;
 }
 
-message AppendStreamMsgResp {
-}
+message AppendStreamMsgResp {}
 
 message GetStreamMsgReq {
   string clientMsgID = 1;
@@ -373,6 +376,37 @@ message GetStreamMsgResp {
   bool end = 5;
   int64 createTime = 6;
   int64 deadlineTime = 7;
+}
+
+message SetUserConversationMaxSeqReq {
+  string conversationID = 1;
+  repeated string ownerUserID = 2;
+  int64 maxSeq = 3;
+}
+message SetUserConversationMaxSeqResp {}
+
+message SetUserConversationMinSeqReq {
+  string conversationID = 1;
+  repeated string ownerUserID = 2;
+  int64 minSeq = 3;
+}
+message SetUserConversationMinSeqResp {}
+
+message GetLastMessageSeqByTimeReq {
+  string conversationID = 1;
+  int64 time = 2;
+}
+
+message GetLastMessageSeqByTimeResp {
+  int64 seq = 1;
+}
+
+message GetLastMessageReq {
+  string userID = 1;
+  repeated string conversationIDs = 2;
+}
+message GetLastMessageResp {
+  map<string,sdkws.MsgData> msgs = 1;
 }
 
 service msg {
@@ -427,4 +461,8 @@ service msg {
 
   rpc AppendStreamMsg(AppendStreamMsgReq) returns (AppendStreamMsgResp);
   rpc GetStreamMsg(GetStreamMsgReq) returns (GetStreamMsgResp);
+  rpc SetUserConversationMaxSeq(SetUserConversationMaxSeqReq) returns (SetUserConversationMaxSeqResp);
+  rpc SetUserConversationMinSeq(SetUserConversationMinSeqReq) returns (SetUserConversationMinSeqResp);
+  rpc GetLastMessageSeqByTime(GetLastMessageSeqByTimeReq) returns (GetLastMessageSeqByTimeResp);
+  rpc GetLastMessage(GetLastMessageReq) returns (GetLastMessageResp);
 }

@@ -13,12 +13,10 @@
 // limitations under the License.
 
 syntax = "proto3";
-//package openim.contactws;
 package openim.sdkws;
 
 import "wrapperspb/wrapperspb.proto";
 
-//option go_package = "github.com/openimsdk/open-im-server/v3/pkg/contact/contactws";
 option go_package = "github.com/openimsdk/protocol/sdkws";
 
 ////////////////////////////////base///////////////////////////////
@@ -41,10 +39,6 @@ message GroupInfo {
   int32 applyMemberFriend = 15;
   int64 notificationUpdateTime = 16;
   string notificationUserID = 17;
-  int32 autoDeleteMsg = 18;
-  int32 autoDeleteDuration = 19;
-  int32 verifyApprove = 20;
-  string groupLink = 21;
 }
 
 message GroupInfoForSet {
@@ -170,6 +164,7 @@ message SeqRange {
 message PullMsgs {
   repeated MsgData Msgs = 1;
   bool isEnd = 2;
+  int64 endSeq = 3;
 }
 
 message PullMessageBySeqsResp {

@@ -357,13 +357,6 @@ message getIncrementalJoinGroupReq {
   uint64 version = 3;
 }
 
-message RevokeApplyReq {
-  string userID = 1;
-  string groupID = 2;
-}
-
-message RevokeApplyResp {}
-
 message getIncrementalJoinGroupResp {
   uint64 version = 1;
   string versionID = 2;
@@ -412,8 +405,6 @@ service group {
   rpc createGroup(CreateGroupReq) returns (CreateGroupResp);
   //申请加群
   rpc joinGroup(JoinGroupReq) returns (JoinGroupResp);
-  //撤回申请
-  rpc revokeApply(RevokeApplyReq) returns (RevokeApplyResp);
   //退出群
   rpc quitGroup(QuitGroupReq) returns (QuitGroupResp);
   //获取指定群信息
